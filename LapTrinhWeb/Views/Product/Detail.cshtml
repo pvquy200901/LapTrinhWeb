@@ -1,0 +1,313 @@
+﻿@model LapTrinhWeb.DbContext.Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#addtocart").click(function () {
+            var model = {};
+            //lấy id sản phẩm
+            model.Id = @Model.Id;
+            // lấy số lượng đặt hàng
+            model.Quantity = $("#ipQuantity").val();
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddToCard", "Home")',
+                data:  JSON.stringify(model) ,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    alert("Thêm giỏ hàng thành công!")
+                    $('#CartCount').text(@Session["count"] + 1);
+                },
+                error: function () {
+                    alert("Lỗi trong khi thêm vào giỏ hàng!");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="./home.html"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a href="./shop.html">Cửa hàng</a>
+                    <span>Chi tiết</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+<!-- Product Shop Section Begin -->
+<section class="product-shop spad page-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="filter-widget">
+                    <h4 class="fw-title">Thể Loại</h4>
+                    <ul class="filter-catagories">
+                        <li class="active"><a href="@Url.Action("shopMen","Home")">Quần áo nam</a></li>
+                        <li><a href="@Url.Action("shopWomen","Home")">Quần áo nữ</a></li>
+                        <li><a href="@Url.Action("shopKid","Home")">Quần áo nữ</a></li>
+                    </ul>
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Giá</h4>
+                    <div class="filter-range-wrap">
+                        <div class="range-slider">
+                            <div class="price-input">
+                                <input type="text" id="minamount">
+                                <input type="text" id="maxamount">
+                            </div>
+                        </div>
+                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                             data-min="33" data-max="98">
+                            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                        </div>
+                    </div>
+                    <a href="#" class="filter-btn">Tìm kiếm</a>
+                </div>
+
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="product-pic-zoom">
+                            <img class="product-big-img" src="~/Content/img/@Model.Avatar" alt="">
+                            <div class="zoom-icon">
+                                <i class="fa fa-search-plus"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-details">
+                            <div class="pd-title">
+                                <h3>@Model.Name</h3>
+                                <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                            </div>
+                            <div class="pd-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <span>(5)</span>
+                            </div>
+                            <div class="pd-desc">
+                                <p>
+                                    @Model.ShortDes
+                                </p>
+                                <h4>@Model.PriceDiscount <span>@Model.Price</span></h4>
+                            </div>
+                            <div class="pd-color">
+                                <h6>Color</h6>
+                                <div class="pd-color-choose">
+                                    <div class="cc-item">
+                                        <input type="radio" id="cc-black">
+                                        <label for="cc-black"></label>
+                                    </div>
+                                    <div class="cc-item">
+                                        <input type="radio" id="cc-yellow">
+                                        <label for="cc-yellow" class="cc-yellow"></label>
+                                    </div>
+                                    <div class="cc-item">
+                                        <input type="radio" id="cc-violet">
+                                        <label for="cc-violet" class="cc-violet"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pd-size-choose">
+                                <div class="sc-item">
+                                    <input type="radio" id="sm-size">
+                                    <label for="sm-size">s</label>
+                                </div>
+                                <div class="sc-item">
+                                    <input type="radio" id="md-size">
+                                    <label for="md-size">m</label>
+                                </div>
+                                <div class="sc-item">
+                                    <input type="radio" id="lg-size">
+                                    <label for="lg-size">l</label>
+                                </div>
+                                <div class="sc-item">
+                                    <input type="radio" id="xl-size">
+                                    <label for="xl-size">xs</label>
+                                </div>
+                            </div>
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input id="ipQuantity" type="text" value="1">
+                                </div>
+                                <a href="#" id="addtocart" class="primary-btn pd-cart">Thêm </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="product-tab">
+                    <div class="tab-item">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="tab-item-content">
+                        <div class="tab-content">
+                            <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                                <div class="product-content">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <h5>Introduction</h5>
+                                            <p>
+                                               @Model.ShortDes
+                                            </p>
+                                            <h5>Features</h5>
+                                            <p>
+                                                @Model.FullDes
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <img src="~/Content/img/product-single/tab-desc.jpg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Shop Section End -->
+<!-- Related Products Section End -->
+@*<div class="related-products spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Sản phẩm liên quan</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    @foreach(var item in Model.)
+                {
+
+                }
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="~/Content/img/products/women-1.jpg" alt="">
+                            <div class="sale">Sale</div>
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <a href="#">
+                                <h5>Pure Pineapple</h5>
+                            </a>
+                            <div class="product-price">
+                                $14.00
+                                <span>$35.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="~/Content/img/products/women-2.jpg" alt="">
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <a href="#">
+                                <h5>Guangzhou sweater</h5>
+                            </a>
+                            <div class="product-price">
+                                $13.00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="~/Content/img/products/women-3.jpg" alt="">
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <a href="#">
+                                <h5>Pure Pineapple</h5>
+                            </a>
+                            <div class="product-price">
+                                $34.00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="~/Content/img/products/women-4.jpg" alt="">
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="pi-text">
+                            <a href="#">
+                                <h5>Converse Shoes</h5>
+                            </a>
+                            <div class="product-price">
+                                $34.00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<!-- Related Products Section End -->

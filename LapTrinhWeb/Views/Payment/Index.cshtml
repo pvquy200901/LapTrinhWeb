@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="#"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a href="#">Cửa hàng</a>
+                    <span>Đặt hàng</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<i style="font-size:200px;display:flex;justify-content:center; margin-top:50px; color:forestgreen;" class="icon_check_alt2"></i>
+<h2 style="text-align: center; margin-top: 50px">Đặt hàng thành công</h2>
+<p style="text-align: center;margin-top:20px">Cảm ơn quý khách đã sử dụng sản phẩm của chúng tôi. Đơn hàng của bạn đã được xử lý và tiếp nhận</p>
+<a href="@Url.Action("Shop","Home")" class="primary-btn continue-shop" style="">Tiếp tục mua hàng</a>
